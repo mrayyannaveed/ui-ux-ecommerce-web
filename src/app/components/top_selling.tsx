@@ -1,6 +1,6 @@
 import React from 'react'
 import Heading from './heading'
-import Carousel from './carousel'
+import Goods from './goods'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -15,10 +15,10 @@ const Top_selling = () => {
   return (
     <div className='mt-14 mb-8'>
         <h1 className='text-center my-8'><Heading hname={heading}/></h1>
-        <section className='grid gap-20 grid-cols-1  lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
+        <section className='grid lg:gap-20 grid-cols-1  lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
             {top_selling.map((item:any,index:number)=>{
                 return(
-                    <Carousel key={index} name={item.name} price={item.price} image={item.image}/>
+                    <Goods key={index} name={item.name} price={item.price} image={item.image}/>
                 )
             })}
         </section>
