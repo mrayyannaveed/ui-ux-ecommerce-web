@@ -64,7 +64,7 @@ const Footer = () => {
             </section>
         </footer>
         <hr className=' border-[#0000001A] border-1 w-[90vw] mx-auto mt-10 my-4'/>
-        <section className='w-[85vw] sm:w-[80vw] md:w-[90vw] mx-auto flex flex-col-reverse gap-5 items-center md:flex-row justify-between md:gap-0'>
+        <section className='w-[85vw] sm:w-[80vw] md:w-[90vw] mx-auto flex flex-col gap-5 items-center md:flex-row justify-between md:gap-0'>
             <div className='text-[#00000099] text-sm sm:text-base'>Shop.co © 2000-2023, All Rights Reserved</div>
             <div className='flex gap-5 items-center'>
                 <Link href={"/"}><RiVisaLine className='bg-white w-10 p-1 rounded-xl hover:bg-black hover:text-white text-4xl text-blue-600'/></Link>
