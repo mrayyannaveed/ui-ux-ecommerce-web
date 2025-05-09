@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 import { BsFacebook, BsGithub, BsInstagram, BsTwitterX } from 'react-icons/bs'
+import { FaApplePay, FaGooglePay } from 'react-icons/fa'
+import { RiVisaLine } from 'react-icons/ri'
 
 const Footer = () => {
   return (
-    <div className='bg-[#F0F0F0] py-20 mt-14'>
+    <div className='bg-[#F0F0F0] pt-20 pb-12 mt-14'>
         <footer className='px-5 w-[85vw] sm:w-[80vw] md:w-[90vw] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 lg:grid-cols-5 lg:gap-10 mb-5'>
             <section className='space-y-4 w-[60%] sm:w-[100%] mx-auto'>
                 <h1 className='text-3xl font-bold'>SHOP.CO</h1>
@@ -62,11 +64,12 @@ const Footer = () => {
             </section>
         </footer>
         <hr className=' border-[#0000001A] border-1 w-[90vw] mx-auto mt-10 my-4'/>
-        <section className='w-[85vw] sm:w-[80vw] md:w-[90vw] mx-auto flex justify-between'>
-            <div className='text-[#00000099]'>Shop.co © 2000-2023, All Rights Reserved</div>
-            <div className='flex gap-5'>
-                <Link href={""}>Visa</Link>
-                <Link href={""}>Paypal</Link>
+        <section className='w-[85vw] sm:w-[80vw] md:w-[90vw] mx-auto flex flex-col-reverse gap-5 items-center md:flex-row justify-between md:gap-0'>
+            <div className='text-[#00000099] text-sm sm:text-base'>Shop.co © 2000-2023, All Rights Reserved</div>
+            <div className='flex gap-5 items-center'>
+                <Link href={"/"}><RiVisaLine className='bg-white w-10 p-1 rounded-xl hover:bg-black hover:text-white text-4xl text-blue-600'/></Link>
+                <Link href={"/"}><FaApplePay className='bg-white w-10 p-1 rounded-xl hover:bg-black hover:text-white text-4xl'/></Link>
+                <Link href={"/"}><FaGooglePay className='bg-white w-10 p-1 rounded-xl hover:bg-black hover:text-white text-4xl'/></Link>
             </div>
         </section>
     </div>
