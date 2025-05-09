@@ -29,9 +29,9 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="hover:text-blue-600 flex items-center gap-1"
+                className="hover:text-blue-600 flex items-center gap-1 cursor-pointer"
               >
-                Shop <ChevronDown className="w-4 h-4" />
+                Shop <ChevronDown className="w-4 h-4 " />
               </button>
               {dropdownOpen && (
                 <div className="absolute top-8 left-0 bg-white border rounded shadow-md w-40 z-50">
@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-4 md:space-x-4">
           {/* One search icon visible across all screen sizes */}
           <button onClick={() => setShowSearch(!showSearch)}>
-            <Search className="text-gray-500" size={24} />
+            <Search className="text-gray-500 cursor-pointer hover:text-blue-600" size={24} />
           </button>
 
           {/* Animated Desktop Search Bar */}
