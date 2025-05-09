@@ -11,7 +11,7 @@ import Heading from "./heading"
 import Review from "./review"
 
 const Testimonals = () => {
-    let heading = "OUR HAPPY CUSTOMERS"
+    const heading = "OUR HAPPY CUSTOMERS"
   return (
     <div className="mt-14 w-[80vw] mx-auto mb-8">
         <Heading hname={heading}/>

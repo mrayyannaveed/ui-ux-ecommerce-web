@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 const New_arrivals = () => {
-    let new_arrivals = [
+    const new_arrivals = [
         {id: 1, name: "T-SHIRT WITH TAPE DETAILS", price: "$120", image: "/new-arrivals/t-shirt.png"},
         {id: 2, name: "SKINNY FIT JEANS", price: "$240", image: "/new-arrivals/jeans.png"},
         {id: 3, name: "CHECKERED SHIRT", price: "$180", image: "/new-arrivals/shirt.png"},
         {id: 4, name: "SLEEVE STRIPED T-SHIRT", price: "$130", image: "/new-arrivals/striped-t-shirt.png"},
     ]
-    let heading = "NEW ARRIVALS"
+    const heading = "NEW ARRIVALS"
   return (
     <div className='mt-14 mb-8'>
         <h1 className='text-center my-8'><Heading hname={heading}/></h1>
