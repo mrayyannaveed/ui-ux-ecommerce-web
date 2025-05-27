@@ -52,12 +52,14 @@ const New_arrivals = () => {
             <h1 className='text-center my-8'><Heading hname={heading}/></h1>
             <section className='grid lg:gap-20 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
                 {new_arrivals.map((item) => (
-                    <Goods 
-                        key={item.id} 
-                        name={item.name} 
-                        price={item.price} 
-                        image={item.image}
-                    />
+                    <Link key={item.id} href={`/product/${item.id}`}>
+                        <Goods 
+                            key={item.id} 
+                            name={item.name} 
+                            price={item.price} 
+                            image={item.image}
+                            />
+                    </Link>
                 ))}
             </section>
             <Link href={'/'} className='flex justify-center'>

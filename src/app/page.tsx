@@ -4,14 +4,16 @@ import New_arrivals from "./components/new_arrivals";
 import Sponsors from "./components/sponsors";
 import Testimonals from "./components/testimonals";
 import Top_selling from "./components/top_selling";
+import Product from "./product/page";
 
 export default function Home() {
   return (
     <div>
       <Hero_section/>
       <Sponsors/>
-      <New_arrivals/>
-      <Top_selling/>
+      {/* <New_arrivals/>
+      <Top_selling/> */}
+      <Product/>
       <Dress_style/>
       <Testimonals/>
     </div>

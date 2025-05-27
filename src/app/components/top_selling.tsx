@@ -16,11 +16,11 @@ const Top_selling = () => {
     <div className='mt-14 mb-8'>
         <h1 className='text-center my-8'><Heading hname={heading}/></h1>
         <section className='grid lg:gap-20 grid-cols-1  lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
-            {top_selling.map((item:any)=>{
-                return(
+            {top_selling.map((item:any)=>(
+                <Link key={item.id} href={`/product/${item.id}`}>
                     <Goods key={item.id} name={item.name} price={item.price} image={item.image}/>
-                )
-            })}
+                </Link>
+            ))}
         </section>
         <Link href={'/'} className='flex justify-center'>
             <Button className='px-10 text-black bg-white border cursor-pointer hover:bg-slate-200'>View All</Button>
