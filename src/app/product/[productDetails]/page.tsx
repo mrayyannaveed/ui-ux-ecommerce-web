@@ -1,5 +1,5 @@
 "use client"
-import Testimonals from '@/app/components/testimonals';
+import ProductReview from '@/app/components/productReview';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react'
@@ -44,7 +44,7 @@ const ProductDetails = (props: ProductProps) => {
           </section>
           <hr className='my-5'/>
           <p className='text-[#00000099]'>Choose Size</p>
-          <section className='flex gap-2'>
+          <section className='flex flex-wrap gap-2'>
             <div className='bg-purple-30 p-5 cursor-pointer hover:bg-black hover:text-white text-[#00000099] bg-[#F0F0F0] h-8 rounded-full flex justify-center items-center'>Small</div>
             <div className='bg-purple-30 p-5 cursor-pointer hover:bg-black hover:text-white text-[#00000099] bg-[#F0F0F0] h-8 rounded-full flex justify-center items-center'>Medium</div>
             <div className='bg-purple-30 p-5 cursor-pointer hover:bg-black hover:text-white text-[#00000099] bg-[#F0F0F0] h-8 rounded-full flex justify-center items-center'>Large</div>
@@ -52,12 +52,12 @@ const ProductDetails = (props: ProductProps) => {
           </section>
           <hr className='my-5'/>
           <section className='flex gap-10'>
-            <p className='bg-[#F0F0F0] text-black px-4 py-2 rounded-full flex items-center gap-7'><span className='rounded-full hover:bg-gradient-to-bl  from-blue-400 to-pink-700 hover:text-white cursor-pointer p-1'><Minus onClick={() => {if(num > 1){ setNum(num - 1)}}}/></span> {num} <span className='rounded-full hover:bg-gradient-to-bl from-blue-400 to-pink-700  hover:text-white cursor-pointer p-1'><Plus onClick={() => setNum(num + 1)}/></span></p>
-            <button className='bg-black text-white px-32 py-2 rounded-full cursor-pointer hover:bg-gradient-to-br from-blue-300 to-pink-300 hover:text-black'>Add to Cart</button>
+            <p className='bg-[#F0F0F0] text-black px-4 py-2 rounded-full flex items-center gap-3 md:gap-7'><span className='rounded-full hover:bg-gradient-to-bl  from-blue-400 to-pink-700 hover:text-white cursor-pointer p-1'><Minus onClick={() => {if(num > 1){ setNum(num - 1)}}}/></span> {num} <span className='rounded-full hover:bg-gradient-to-bl from-blue-400 to-pink-700  hover:text-white cursor-pointer p-1'><Plus onClick={() => setNum(num + 1)}/></span></p>
+            <button className='bg-black text-white w-full md:px-32 py-2 rounded-full cursor-pointer hover:bg-gradient-to-br from-blue-300 to-pink-300 hover:text-black'>Add to Cart</button>
           </section>
         </section>
       </div>
-      <Testimonals/>
+      <ProductReview/>
     </div>
   )
 }
