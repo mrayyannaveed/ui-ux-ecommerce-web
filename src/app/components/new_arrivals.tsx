@@ -30,11 +30,6 @@ const New_arrivals = () => {
     const heading = "NEW ARRIVALS"
     
     const displayedProducts = showAll ? newProduct : newProduct.slice(0, 4);
-
-    const handleAddToCart = (e : React.MouseEvent, product : Product) => {
-        e.preventDefault()
-        addToCart(product)
-    } 
     
     return (
         <div className='mt-14 mb-8'>
