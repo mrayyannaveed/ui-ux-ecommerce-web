@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import { ChevronRight } from 'lucide-react'
 import Swal from 'sweetalert2'
+import { client } from '@/sanity/lib/client'
 
 const Page = () => {
   const [cartItems, setCartItems] = useState<Product[]>([])
@@ -44,7 +45,7 @@ const Page = () => {
     0
   )
 
-  const total = (subTotal - discount).toFixed(2)
+  const total = Number((subTotal - discount).toFixed(2))
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -67,7 +68,32 @@ const Page = () => {
     return Object.values(errors).every((error) => !error)
   }
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
+    const orderData = {
+      _type : 'order',
+      firstName : formValues.firstName,
+      lastName : formValues.lastName,
+      email : formValues.email,
+      phone : formValues.phone,
+      address : formValues.address,
+      zipCode : formValues.zipCode,
+      city : formValues.city,
+      cartItems : cartItems.map((item) => ({
+        _type : 'reference',
+        _ref : item._id
+      })),
+      total : total,
+      discount : discount,
+      orderDate : new Date().toISOString
+    }
+
+    try {
+      await client.create(orderData)
+      localStorage.removeItem('appliedDiscount')
+    } 
+    catch(error){
+      console.error("error creating order", error)
+    }
     if (validateForm()) {
       localStorage.removeItem('appliedDiscount')
     Swal.fire("Success", "Order placed successfully!", "success")
