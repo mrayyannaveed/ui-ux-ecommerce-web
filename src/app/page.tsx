@@ -11,8 +11,6 @@ export default function Home() {
     <div>
       <Hero_section/>
       <Sponsors/>
-      {/* <New_arrivals/>
-      <Top_selling/> */}
       <Product/>
       <Dress_style/>
       <Testimonals/>

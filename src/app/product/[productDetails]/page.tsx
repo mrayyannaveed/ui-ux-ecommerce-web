@@ -2,22 +2,58 @@
 import ProductReview from '@/app/components/productReview';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react'
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react'
+import { Product } from '../../../../types/products';
+import { client } from '@/sanity/lib/client';
+import { groq } from 'next-sanity';
+// import { urlFor } from '@/sanity/lib/image';
 
-interface ProductProps{
-    id: number;
-    name: string;
-    price: string;
-    image: string;
+
+interface ProductPageProps {
+  params : Promise<{slug : string}>
 }
-const ProductDetails = (props: ProductProps) => {
+
+// async function getProduct(slug : string) : Promise<Product> {
+//   return client.fetch(
+//     groq`*[_type == "product" && slug.current == $slug][0]{
+//     _id,
+//     name,
+//     _type,
+//     image,
+//     price
+//     description
+//     }`,
+//     {slug}
+//   )
+// }
+
+const ProductDetails =  ({params} : ProductPageProps) => {
   const [num, setNum] = useState(1)
+  // const[product, setProduct] = useState<Product>()
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     const {slug} = await params
+  //     const product = await getProduct((await params).slug)
+  //     setProduct(product)
+  //   }
+  //   fetchProduct()
+  // }, [])
   return (
     <div className=''>
       <div className='w-[80vw] lg:w-[85vw] m-auto lg:flex gap-8 mt-14 mb-8'>
         <section className='flex flex-col items-center lg:flex-row-reverse gap-2 space-y-2 lg:w-1/2 mb-8'>
           <div className='bg-purple-30 col-span-2 content-center cursor-pointer'>
-            <Image className='w-fit h-fit' src={'/product_details/t-shirt_details.png'} alt='t-shirt' width={1000} height={1000}/>
+            <Image className='w-fit h-fit' src={"/product_details/t-shirt_details.png"} alt='t-shirt' width={1000} height={1000}/>
+            {/* {product.image && (
+              <Image
+              className='w-fit h-fit' 
+              src={urlFor(product.image).url()} 
+              alt='t-shirt' 
+              width={1000} 
+              height={1000}
+              />
+            )} */}
           </div>
           <section className='flex lg:flex-col gap-2'>
             <div className='bg-amber-30 cursor-pointer'>
@@ -53,7 +89,9 @@ const ProductDetails = (props: ProductProps) => {
           <hr className='my-5'/>
           <section className='flex gap-10'>
             <p className='bg-[#F0F0F0] text-black px-4 py-2 rounded-full flex items-center gap-3 md:gap-7'><span className='rounded-full hover:bg-gradient-to-bl  from-blue-400 to-pink-700 hover:text-white cursor-pointer p-1'><Minus onClick={() => {if(num > 1){ setNum(num - 1)}}}/></span> {num} <span className='rounded-full hover:bg-gradient-to-bl from-blue-400 to-pink-700  hover:text-white cursor-pointer p-1'><Plus onClick={() => setNum(num + 1)}/></span></p>
-            <button className='bg-black text-white w-full md:px-32 py-2 rounded-full cursor-pointer hover:bg-gradient-to-br from-blue-300 to-pink-300 hover:text-black'>Add to Cart</button>
+            <Link href={"/addcart"}>
+              <button className='bg-black text-white w-full md:px-32 py-2 rounded-full cursor-pointer hover:bg-gradient-to-br from-blue-300 to-pink-300 hover:text-black'>Add to Cart</button>
+            </Link>
           </section>
         </section>
       </div>

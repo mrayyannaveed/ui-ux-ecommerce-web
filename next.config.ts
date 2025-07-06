@@ -1,10 +1,10 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-      eslint: {
-        ignoreDuringBuilds: true,
-    }
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ['cdn.pixabay.com', 'images.unsplash.com', 'plus.unsplash.com','mockuptree.com', 'unblast.com', 'i.pinimg.com',
+      'i.pinimg.com', 'cdn.sanity.io'
+    ],
+  },
 };
 
 export default nextConfig;

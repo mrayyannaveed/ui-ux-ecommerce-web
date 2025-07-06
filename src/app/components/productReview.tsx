@@ -6,6 +6,10 @@ import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/u
 import Link from 'next/link';
 import Goods from './goods';
 import Heading from './heading';
+import { useEffect, useState } from 'react';
+import { sanityFetch } from '@/sanity/lib/fetch';
+import { fourPro } from '@/sanity/lib/queries';
+import { Product } from '../../../types/products';
 
 const reviews = [
   {
@@ -60,13 +64,21 @@ const StarRating = ({ rating }: { rating: number }) => {
   );
 };
 
+
 export default function ProductReview() {
-    const top_selling = [
-    {id: 1, name: "VERTICAL STRIPED SHIRT", price: "$212", image: "/top-selling/shirt.png"},
-    {id: 2, name: "COURAGE GRAPHIC T-SHIRT", price: "$145", image: "/top-selling/t-shirt.png"},
-    {id: 3, name: "LOOSE FIT BERMUDA SHORTS", price: "$80", image: "/top-selling/shorts.png"},
-    {id: 4, name: "FADED SKINNY JEANS", price: "$210", image: "/top-selling/jeans.png"},
-    ]
+    const [product, setProduct] = useState<Product[]>([])
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const products: Product[] = await sanityFetch({query: fourPro})
+                setProduct(products)
+            }
+            catch(error) {
+                console.log("Products data not fetch ", error)
+            }
+        }
+        fetchData()
+    })
 
     const heading = "YOU MIGHT ALSO LIKE"
   return (
@@ -108,14 +120,12 @@ export default function ProductReview() {
         </Link>
         <h1 className='text-center my-8'><Heading hname={heading}/></h1>
         <section className='grid lg:gap-20 grid-cols-1  lg:grid-cols-2 xl:grid-cols-4  bg-blue-30'>
-            {top_selling.map((item:any)=>(
-                <Link key={item.id} href={`/product/${item.id}`}>
-                    <Goods key={item.id} name={item.name} price={item.price} image={item.image}/>
+            {product.map((item: Product)=>(
+                <Link key={item._id} href={`/product/${item.slug.current}`}>
+                    <Goods key={item._id} {...item}/>
                 </Link>
             ))}
         </section>
     </div>
   );
 }
-
-// w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto

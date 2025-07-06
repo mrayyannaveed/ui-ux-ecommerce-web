@@ -1,14 +1,31 @@
+
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
 import { ShoppingCart, User, Search, ChevronDown, Menu, X } from 'lucide-react';
 import clsx from 'clsx';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Slider } from "@/components/ui/slider";
 
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [priceRange, setPriceRange] = useState([10]);
 
   return (
     <nav className="w-full px-4 py-4 shadow-md bg-white relative">
@@ -50,19 +67,137 @@ export default function Navbar() {
               )}
             </div>
             <Link href="/sale" className="hover:text-blue-600">On Sale</Link>
-            <Link href="/new-arrivals" className="hover:text-blue-600">New Arrivals</Link>
-            <Link href="/brands" className="hover:text-blue-600">Brands</Link>
+            <Link href="/new_arrivals" className="hover:text-blue-600">New Arrivals</Link>
+            
+            <Drawer>
+              <DrawerTrigger asChild>
+                <button className="hover:text-blue-600 cursor-pointer">Filter</button>
+              </DrawerTrigger>
+              <DrawerContent className="left-0 right-auto w-[300px] h-full">
+                <DrawerHeader className="flex justify-between items-center border-b pb-4">
+                  <DrawerTitle className="text-center flex-1">Filters</DrawerTitle>
+                  <DrawerClose className="p-2">
+                    <X size={24} />
+                  </DrawerClose>
+                </DrawerHeader>
+
+                <div className="p-4 space-y-6">
+                  {/* Category Links */}
+                  <div className="space-y-2">
+                    <Link href="/category/tshirts" className="block hover:text-blue-600">T-Shirts</Link>
+                    <Link href="/category/shorts" className="block hover:text-blue-600">Shorts</Link>
+                    <Link href="/category/shirts" className="block hover:text-blue-600">Shirts</Link>
+                    <Link href="/category/jeans" className="block hover:text-blue-600">Jeans</Link>
+                  </div>
+
+                  {/* Filter Accordions */}
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="price">
+                      <AccordionTrigger>Price Range</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="px-2">
+                          <Slider
+                            defaultValue={[10]}
+                            max={1000}
+                            min={10}
+                            step={10}
+                            onValueChange={setPriceRange}
+                          />
+                          <div className="mt-2 text-sm text-gray-600">
+                            ${priceRange[0]} - $1000
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="color">
+                      <AccordionTrigger>Color</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-2">
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Black</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>White</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Blue</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Red</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Green</span>
+                          </label>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="size">
+                      <AccordionTrigger>Size</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-2">
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>S</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>M</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>L</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>XL</span>
+                          </label>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="design">
+                      <AccordionTrigger>Design</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-2">
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Casual</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Formal</span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input type="checkbox" className="rounded" />
+                            <span>Sport</span>
+                          </label>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+
+                  <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
+                    Apply Filters
+                  </button>
+                </div>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
 
-        {/* Right Section */}
+        {/* Rest of the navbar code remains the same */}
         <div className="flex items-center space-x-4 md:space-x-4">
-          {/* One search icon visible across all screen sizes */}
           <button onClick={() => setShowSearch(!showSearch)}>
             <Search className="text-gray-500 cursor-pointer hover:text-blue-600" size={24} />
           </button>
 
-          {/* Animated Desktop Search Bar */}
           <div
             className={clsx(
               'hidden lg:flex transition-all duration-300 ease-in-out overflow-hidden',
@@ -82,7 +217,7 @@ export default function Navbar() {
             />
           </div>
 
-          <Link href="/cart">
+          <Link href="/addcart">
             <ShoppingCart className="cursor-pointer hover:text-blue-600" />
           </Link>
           <Link href="/login">
@@ -91,7 +226,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Search Bar (below nav) */}
+      {/* Mobile Search Bar */}
       {showSearch && (
         <div className="lg:hidden mt-4 flex justify-center transition-all duration-300 ease-in-out">
           <div className="w-[90%] h-[48px] bg-gray-100 rounded-full flex items-center px-4">
@@ -105,7 +240,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Animated Mobile Menu */}
+      {/* Mobile Menu */}
       <div
         className={clsx(
           'md:hidden transition-all duration-500 ease-in-out overflow-hidden',

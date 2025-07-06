@@ -1,74 +1,151 @@
-// import React from 'react'
-// import Heading from './heading'
-// import Goods from './goods'
-// import Link from 'next/link'
-// import { Button } from '@/components/ui/button'
-
-// const New_arrivals = () => {
-//     const new_arrivals = [
-//         {id: 1, name: "T-SHIRT WITH TAPE DETAILS", price: "$120", image: "/new-arrivals/t-shirt.png"},
-//         {id: 2, name: "SKINNY FIT JEANS", price: "$240", image: "/new-arrivals/jeans.png"},
-//         {id: 3, name: "CHECKERED SHIRT", price: "$180", image: "/new-arrivals/shirt.png"},
-//         {id: 4, name: "SLEEVE STRIPED T-SHIRT", price: "$130", image: "/new-arrivals/striped-t-shirt.png"},
-//     ]
-//     const heading = "NEW ARRIVALS"
-//   return (
-//     <div className='mt-14 mb-8'>
-//         <h1 className='text-center my-8'><Heading hname={heading}/></h1>
-//         <section className='grid lg:gap-20 grid-cols-1  lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
-//             {new_arrivals.map((item:any,index:number)=>{
-//                 return(
-//                     <Goods key={index} name={item.name} price={item.price} image={item.image}/>
-//                 )
-//             })}
-//         </section>
-//         <Link href={'/'} className='flex justify-center'>
-//             <Button className='px-10 text-black bg-white border cursor-pointer hover:bg-slate-200'>View All</Button>
-//         </Link>
-//     </div>
-//   )
-// }
-
-// export default New_arrivals
-
-// New_arrivals.tsx
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Heading from './heading'
-import Goods from './goods'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { allProducts } from '@/sanity/lib/queries'
+import { Product } from '../../../types/products'
+import { client } from '@/sanity/lib/client'
+import { addToCart } from '../actions/actions'
+import Goods from './goods'
+
+
 
 const New_arrivals = () => {
-    const new_arrivals = [
-        {id: 1, name: "T-SHIRT WITH TAPE DETAILS", price: "$120", image: "/new-arrivals/t-shirt.png"},
-        {id: 2, name: "SKINNY FIT JEANS", price: "$240", image: "/new-arrivals/jeans.png"},
-        {id: 3, name: "CHECKERED SHIRT", price: "$180", image: "/new-arrivals/shirt.png"},
-        {id: 4, name: "SLEEVE STRIPED T-SHIRT", price: "$130", image: "/new-arrivals/striped-t-shirt.png"},
-    ]
+    const [newProduct, setNewProduct] = useState<Product[]>([]);
+    const [showAll, setShowAll] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const fetchedProduct : Product[] = await client.fetch(allProducts)
+                setNewProduct(fetchedProduct.filter((item: Product) => item.tag === 'new_arrival'))
+            }
+            catch(error) {
+                console.log("Products data not fetch ", error)
+            }
+        }
+        fetchData()
+    }, [])
     const heading = "NEW ARRIVALS"
+    
+    const displayedProducts = showAll ? newProduct : newProduct.slice(0, 4);
+
+    const handleAddToCart = (e : React.MouseEvent, product : Product) => {
+        e.preventDefault()
+        addToCart(product)
+    } 
     
     return (
         <div className='mt-14 mb-8'>
-            <h1 className='text-center my-8'><Heading hname={heading}/></h1>
+            <h1 className='text-center my-10'><Heading hname={heading}/></h1>
             <section className='grid lg:gap-20 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
-                {new_arrivals.map((item) => (
-                    <Link key={item.id} href={`/product/${item.id}`}>
-                        <Goods 
-                            key={item.id} 
-                            name={item.name} 
-                            price={item.price} 
-                            image={item.image}
-                            />
-                    </Link>
+                {displayedProducts.map((item: Product) => (
+                <Link key={item._id} href={`/product/${item.slug.current}`}>
+                    <Goods key={item._id} {...item}/>
+                </Link>
                 ))}
             </section>
-            <Link href={'/'} className='flex justify-center'>
-                <Button className='px-10 text-black bg-white border cursor-pointer hover:bg-slate-200'>
-                    View All
+            <div className='flex justify-center pt-14'>
+                <Button 
+                    onClick={() => setShowAll(!showAll)}
+                    className='px-10 text-black bg-white border cursor-pointer hover:bg-slate-200'
+                >
+                    {showAll ? 'Show Less' : 'View All'}
                 </Button>
-            </Link>
+            </div>
         </div>
     )
 }
 
 export default New_arrivals
+
+
+
+                    {/* <div className='space-y-2 pb-2 hover:scale-110 duration-700 flex flex-col items-center bg-[#eee9e9] rounded-2xl'>                     
+                        {item.image && (
+                        <Image 
+                            className='cursor-pointer w-full h-60' 
+                            src={urlFor(item.image).url()}
+                            alt={item.name} 
+                            width={1000} 
+                            height={1000}
+                        />
+                        )}
+                        <p className='font-bold'>{item.name}</p>
+                        <p className='font-bold'>{item.price ? `$${item.price}` : "Price not available"}</p>
+                        <button className='cursor-pointer hover:from-yellow-500 hover:to-red-600 bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-lg text-white font-semibold shadow-md
+                        ' onClick={(e) => handleAddToCart(e, item)}>Add to Cart
+                        </button>
+                    </div> */}
+
+// "use client"
+// import React, { useEffect, useState } from 'react'
+// import Heading from './heading'
+// import Link from 'next/link'
+// import { Button } from '@/components/ui/button'
+// import Image from 'next/image'
+
+// interface newArrival {
+//     id: number,
+//     name: string,
+//     price: number,
+//     image: string,
+//     inStock?: number,
+//     tag?: string
+// }
+
+// const New_arrivals = () => {
+//     const [product, setProduct] = useState<newArrival[]>([]);
+//     const [showAll, setShowAll] = useState(false);
+
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             try{
+//                 const response = await fetch("https://677d08a74496848554c8b8fd.mockapi.io/data");
+//                 const data = await response.json();
+//                 setProduct(data.filter((item: newArrival) => item.tag === 'new_arrival'))
+//             }
+//             catch(error) {
+//                 console.log("Products data not fetch ", error)
+//             }
+//         }
+//         fetchData()
+//     }, [])
+//     const heading = "NEW ARRIVALS"
+    
+//     const displayedProducts = showAll ? product : product.slice(0, 4);
+    
+//     return (
+//         <div className='mt-14 mb-8'>
+//             <h1 className='text-center my-10'><Heading hname={heading}/></h1>
+//             <section className='grid lg:gap-20 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 w-[75vw] lg:w-[80vw] xl:w-[90vw] mx-auto bg-blue-30'>
+//                 {displayedProducts.map((item: newArrival) => (
+//                 <Link key={item.id} href={`/product/${item.id}`}>
+//                     <div className='space-y-2 hover:scale-110 duration-700 flex flex-col items-center bg-[#eee9e9] rounded-2xl'>                     
+//                         <Image 
+//                             className='cursor-pointer w-full h-60' 
+//                             src={item.image}
+//                             alt={item.name} 
+//                             width={1000} 
+//                             height={1000}
+//                         />
+//                         <p className='font-bold'>{item.name}</p>
+//                         <p className='font-bold'>{item.price}</p>
+//                     </div>
+//                 </Link>
+//                 ))}
+//             </section>
+//             <div className='flex justify-center pt-14'>
+//                 <Button 
+//                     onClick={() => setShowAll(!showAll)}
+//                     className='px-10 text-black bg-white border cursor-pointer hover:bg-slate-200'
+//                 >
+//                     {showAll ? 'Show Less' : 'View All'}
+//                 </Button>
+//             </div>
+//         </div>
+//     )
+// }
+
+// export default New_arrivals
