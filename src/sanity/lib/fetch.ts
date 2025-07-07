@@ -8,6 +8,6 @@ const client = createClient({
     apiVersion : "2023-08-01"
 })
 
-export async function sanityFetch({query, params = {}}: {query : string, params ?: any}){
+export async function sanityFetch({query, params = {}}: {query : string, params ?: Record<string, unknown>}){
     return await client.fetch(query, params)
 }
