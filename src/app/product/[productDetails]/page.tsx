@@ -4,12 +4,9 @@ import { Product } from '../../../../types/products';
 import { notFound } from 'next/navigation';
 import ProductDetailsContent from '@/app/components/ProductDetailsContent';
 
-// ✅ Correct param type for Next.js App Router
-type PageProps = {
-  params: {
-    productDetails: string;
-  };
-};
+interface ProductPageProps {
+  params: { productDetails: string }; // ✅ No Promise!
+}
 
 const getProduct = async (productDetails: string): Promise<Product | null> => {
   return await client.fetch(
@@ -28,7 +25,8 @@ const getProduct = async (productDetails: string): Promise<Product | null> => {
   );
 };
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
+  // ✅ No need to await params – it's a normal object
   const product = await getProduct(params.productDetails);
 
   if (!product) return notFound();
