@@ -37,6 +37,6 @@ export const getCartItems = () : Product[] => {
 }
 
 // actions.ts
-export const clearCart = () => {
-  localStorage.removeItem("cart")
-}
+// export const clearCart = () => {
+//   localStorage.removeItem("cart")
+// }

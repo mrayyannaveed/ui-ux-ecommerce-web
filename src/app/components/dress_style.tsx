@@ -3,13 +3,7 @@ import Heading from './heading'
 import Image from 'next/image'
 
 const Dress_style = () => {
-//   let dress_style = [
-//     {id: 1, image: "/dress-style/casual2.png"},
-//     {id: 2, image: "/dress-style/formal2.png", span:"col-span-2"},
-//     {id: 3, image: "/dress-style/party2.png", span:"col-span-2"},
-//     {id: 4, image: "/dress-style/gym2.png"},
-// ]
-  let heading = "BROWSE BY DRESS STYLE"
+  const heading = "BROWSE BY DRESS STYLE"
   return (
     <div className='bg-[#F0F0F0] text-center mt-14 mb-8 w-[80vw] sm:w-[70vw] lg:w-[75vw] xl:w-[70vw] mx-auto space-y-12 py-12 rounded-4xl'>
       <Heading hname={heading}/>

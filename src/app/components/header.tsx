@@ -1,6 +1,4 @@
-import Link from 'next/link'
 import { FaCheck } from 'react-icons/fa'
-import { FiAlertCircle } from 'react-icons/fi'
 
 const Header = () => {
   return (

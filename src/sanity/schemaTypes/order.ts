@@ -1,6 +1,3 @@
-import { Layout } from "lucide-react";
-
-
 export default {
     name : 'order',
     type : 'document',
