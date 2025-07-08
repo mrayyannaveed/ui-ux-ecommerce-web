@@ -71,7 +71,6 @@ const Cart = () => {
       confirmButtonText: "Yes, proceed!"
     }).then((result) => {
       if (result.isConfirmed) {
-        // clearCart()
         router.push('/checkout')
         setCartItems([])
         Swal.fire("Success", "Your Order has been successfully processed", "success")
