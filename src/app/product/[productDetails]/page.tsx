@@ -41,8 +41,8 @@ import { notFound } from 'next/navigation';
 import ProductDetailsContent from '@/app/components/ProductDetailsContent';
 import { Product } from '../../../../types/products';
 
-interface ProductPageProps {
-  params: { productDetails: string };
+type ProductPageProps = {
+  params: Promise<{ productDetails: string }>;
 }
 
 // Fetch product details
@@ -76,7 +76,7 @@ export async function generateStaticParams() {
 
 // Page component
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProduct(params.productDetails);
+  const product = await getProduct((await params).productDetails);
 
   if (!product) return notFound();
 
