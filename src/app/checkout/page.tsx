@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Product } from '../../../types/products'
@@ -68,7 +69,21 @@ const Page = () => {
     return Object.values(errors).every((error) => !error)
   }
 
+  const updateProductStock = async (productId: string, soldQuantity: number) => {
+    // Get current product
+    const product = await client.getDocument(productId)
+    // Calculate new stock
+    const newStock = product?.stock - soldQuantity
+    // Update product stock
+    await client
+      .patch(productId)
+      .set({stock: newStock})
+      .commit()
+  }
+
   const handlePlaceOrder = async () => {
+    if (!validateForm()) return
+
     const orderData = {
       _type : 'order',
       firstName : formValues.firstName,
@@ -89,14 +104,20 @@ const Page = () => {
 
     try {
       await client.create(orderData)
+      
+      // Update stock for each product
+      for (const item of cartItems) {
+        await updateProductStock(item._id, item.stock)
+      }
+      
       localStorage.removeItem('appliedDiscount')
+      localStorage.removeItem('cart')
+      setCartItems([])
+      Swal.fire("Success", "Order placed successfully!", "success")
     } 
     catch(error){
       console.error("error creating order", error)
-    }
-    if (validateForm()) {
-      localStorage.removeItem('appliedDiscount')
-    Swal.fire("Success", "Order placed successfully!", "success")
+      Swal.fire("Error", "Failed to place order", "error")
     }
   }
 
