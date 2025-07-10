@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 import { Eye } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -44,9 +44,6 @@ const Login = () => {
                 <SignInButton mode='modal'/>
             </div>
         </SignedOut>
-            {/* <SignedIn>
-                <SignOutButton/>
-            </SignedIn> */}
         <p className='text-center mt-4 text-gray-600'>
             New here? <Link href={'#'} className='text-red-500 font-bold'>Create an account</Link>
         </p>
