@@ -10,6 +10,7 @@
     "import-data": "node scripts/importSanityData.mjs"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.24.0",
     "@heroui/drawer": "^2.2.19",
     "@heroui/system": "^2.4.18",
     "@heroui/theme": "^2.4.17",

@@ -6,14 +6,22 @@ import Swal from 'sweetalert2'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import { useRouter } from 'next/navigation'
+import AuthGuard from '@/components/AuthGuard'
+import { Button } from '@/components/ui/button'
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<Product[]>([])
   const [discountCode, setDiscountCode] = useState<string>('')
   const [isDiscountApplied, setIsDiscountApplied] = useState<boolean>(false)
+  const [discount, setDiscount] = useState<number>(0)
 
   useEffect(() => {
     setCartItems(getCartItems())
+    const savedDiscount = localStorage.getItem('appliedDiscount')
+    if (savedDiscount) {
+      setIsDiscountApplied(true)
+      setDiscount(Number(savedDiscount))
+    }
   }, [])
 
   const handleRemoveFromCart = (productId: string) => {
@@ -55,7 +63,7 @@ const Cart = () => {
 
   const calculatedTotal = () => {
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.stock, 0)
-    return isDiscountApplied ? subtotal * 0.5 : subtotal
+    return isDiscountApplied ? subtotal - 50 : subtotal
   }
 
   const router = useRouter();
@@ -78,19 +86,22 @@ const Cart = () => {
     })
   }
 
-  const handleDiscountCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const code = e.target.value
-    setDiscountCode(code)
-    if(code === 'inde') {
+  const handleDiscountCode = () => {
+    if(discountCode === 'inde') {
       setIsDiscountApplied(true)
-      localStorage.setItem('isDiscountApplied', 'true')
-      Swal.fire("Success", "50% discount applied!", "success")
+      setDiscount(50)
+      localStorage.setItem('appliedDiscount', '50')
+      Swal.fire("Success", "$50 discount applied!", "success")
     } else {
       setIsDiscountApplied(false)
+      setDiscount(0)
+      localStorage.removeItem('appliedDiscount')
+      Swal.fire("Error", "Invalid discount code!", "error")
     }
   }
 
   return (
+    <AuthGuard>
     <div className="max-w-7xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h1>
 
@@ -149,19 +160,20 @@ const Cart = () => {
               <span>Sub Total:</span>
               <span className="font-semibold">${cartItems.reduce((total, item) => total + item.price * item.stock, 0).toFixed(2)}</span>
             </div>
-            <div className="mb-4">
+            <div className="mb-4 flex gap-3">
               <input
                 type="text"
                 placeholder="Enter discount code"
                 value={discountCode}
-                onChange={handleDiscountCode}
+                onChange={(e) => setDiscountCode(e.target.value)}
                 className="w-full p-2 border rounded-lg mb-2"
               />
-              {isDiscountApplied && (
-                <p className="text-green-600 text-sm">50% discount applied!</p>
-              )}
+              <Button className='bg-blue-500 cursor-pointer' onClick={handleDiscountCode}>Apply Coupon</Button>
             </div>
-            <div className="flex justify-between mb-4">
+              {isDiscountApplied && (
+                <p className="text-green-600 text-md">${discount} discount applied!</p>
+              )}
+            <div className="flex justify-between mb-4 mt-4">
               <span>Total:</span>
               <span className="font-semibold">${calculatedTotal().toFixed(2)}</span>
             </div>
@@ -175,6 +187,7 @@ const Cart = () => {
         </div>
       )}
     </div>
+    </AuthGuard>
   )
 }
 
