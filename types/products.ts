@@ -12,7 +12,7 @@ export interface Product {
     price : number;
     description?: string;
     stock: number;
-    tag?: string
+    tag?: string;
     slug : {
         _type : "slug";
         current : string; 

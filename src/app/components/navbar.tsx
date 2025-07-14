@@ -5,27 +5,27 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ShoppingCart, User, Search, ChevronDown, Menu, X } from 'lucide-react';
 import clsx from 'clsx';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Slider } from "@/components/ui/slider";
+// import {
+//   Drawer,
+//   DrawerClose,
+//   DrawerContent,
+//   DrawerHeader,
+//   DrawerTitle,
+//   DrawerTrigger,
+// } from "@/components/ui/drawer";
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/ui/accordion";
+// import { Slider } from "@/components/ui/slider";
 
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [priceRange, setPriceRange] = useState([10]);
+  // const [priceRange, setPriceRange] = useState([10]);
 
   return (
     <nav className="w-full px-4 py-4 shadow-md bg-white relative">
@@ -68,8 +68,9 @@ export default function Navbar() {
             </div>
             <Link href="/sale" className="hover:text-blue-600">On Sale</Link>
             <Link href="/new_arrivals" className="hover:text-blue-600">New Arrivals</Link>
+            <Link href="/shop" className="hover:text-blue-600">Filter</Link>
             
-            <Drawer>
+            {/* <Drawer>
               <DrawerTrigger asChild>
                 <button className="hover:text-blue-600 cursor-pointer">Filter</button>
               </DrawerTrigger>
@@ -82,7 +83,7 @@ export default function Navbar() {
                 </DrawerHeader>
 
                 <div className="p-4 space-y-6">
-                  {/* Category Links */}
+                  
                   <div className="space-y-2">
                     <Link href="/category/tshirts" className="block hover:text-blue-600">T-Shirts</Link>
                     <Link href="/category/shorts" className="block hover:text-blue-600">Shorts</Link>
@@ -90,7 +91,7 @@ export default function Navbar() {
                     <Link href="/category/jeans" className="block hover:text-blue-600">Jeans</Link>
                   </div>
 
-                  {/* Filter Accordions */}
+                  
                   <Accordion type="single" collapsible>
                     <AccordionItem value="price">
                       <AccordionTrigger>Price Range</AccordionTrigger>
@@ -188,7 +189,7 @@ export default function Navbar() {
                   </button>
                 </div>
               </DrawerContent>
-            </Drawer>
+            </Drawer> */}
           </div>
         </div>
 
@@ -264,7 +265,7 @@ export default function Navbar() {
             )}
             <Link href="/sale" className="block">On Sale</Link>
             <Link href="/new-arrivals" className="block">New Arrivals</Link>
-            <Link href="/brands" className="block">Brands</Link>
+            <Link href="/shop" className="block">Filter</Link>
           </div>
         </div>
       </div>

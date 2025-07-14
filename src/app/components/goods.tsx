@@ -33,7 +33,7 @@ const Goods = (product: Product) => {
                 />)}
                 <p className='font-bold'>{product.name}</p>
                 <p className='font-bold'>${product.price ? `${product.price}` : "Price not available"}</p>
-                <button className='cursor-pointer hover:from-yellow-500 hover:to-red-600 bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-lg text-white font-semibold shadow-md
+                <button className='cursor-pointer w-[90%] hover:from-yellow-500 hover:to-red-600 bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-lg text-white font-semibold shadow-md
                 ' onClick={(e) => handleAddToCart(e, product)}>Add to Cart
                 </button>
 
